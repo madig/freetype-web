@@ -1,0 +1,9 @@
+# Site settings
+title: FreeType
+description: "FreeType is a freely available software library to render fonts."
+baseurl: "/freetype-web-new"
+url: "http://www.freetype.org"
+
+# Build settings
+markdown: kramdown
+permalink: pretty

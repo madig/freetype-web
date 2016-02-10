@@ -1,0 +1,160 @@
+---
+layout: page
+title: Patents
+---
+
+## The TrueType Bytecode Patents Have Expired!
+
+Since May 2010, all patents related to bytecode hinting have expired worldwide.
+It it thus no longer necessary to disable the bytecode interpreter, and
+starting with FreeType version 2.4, it is enabled by default.
+
+The affected patents were
+
+* [Patent US5155805](http://www.google.com/patents/US5155805): 
+Method and apparatus for moving control points in displaying digital typeface
+on raster output devices
+
+* [Patent US5159668](http://www.google.com/patents/US5159668): 
+Method and apparatus for manipulating outlines in improving digital typeface on
+raster output devices
+
+* [Patent US5325479](http://www.google.com/patents/US5325479): 
+Method and apparatus for moving control points in displaying digital typeface
+on raster output devices
+
+## ClearType Color Filtering Patent Issues
+
+A survey from June 2007 shows no less than nine patents from Microsoft that cover ClearType.
+
+* [Patent US6219025](http://www.google.com/patents/US6219025):
+Mapping image data samples to pixel sub-components on a striped display device
+
+* [Patent US6225973](http://www.google.com/patents/US6225973):
+Mapping samples of foreground/background color image data to pixel
+sub-components
+
+* [Patent US6239783](http://www.google.com/patents/US6239783):
+Weighted mapping of image data samples to pixel sub-components on a display
+device
+
+* [Patent US6243070](http://www.google.com/patents/US6243070):
+Method and apparatus for detecting and reducing color artifacts in images
+
+* [Patent US6282327](http://www.google.com/patents/US6282327):
+Maintaining advance widths of existing characters that have been resolution
+enhanced
+
+* [Patent US6307566](http://www.google.com/patents/US6307566):
+Methods and apparatus for performing image rendering and rasterization
+operations
+
+* [Patent US6393145](http://www.google.com/patents/US6393145):
+Methods apparatus and data structures for enhancing the resolution of images to
+be rendered on patterned display devices
+
+* [Patent US6421054](http://www.google.com/patents/US6421054):
+Methods and apparatus for performing grid fitting and hinting operations
+
+* [Patent US6624828](http://www.google.com/patents/US6624828):
+Method and apparatus for improving the quality of displayed images through the
+use of user reference information
+
+Essentially, these patents cover several different things, which can be grossly sub-divided into
+
+* the process of displaying images where data is 'mapped' to individual (e.g.,
+LCD) sub-pixels, instead of whole pixels,
+
+* the process of displaying said images after filtering them for various
+purposes, e.g., reducing color fringes, and
+
+* the process of dealing with metrics and spacing rounding in a sub-pixel
+world.
+
+It is possible that Microsoft acquired other patents related to the field in
+the previous years.
+
+Please note that above claims do not cover the enhanced interpretation of TrueType bytecode instructions as discussed in [Greg Hitchcock's whitepaper][hitchcock2009].
+
+[hitchcock2009]: https://www.microsoft.com/typography/cleartype/truetypecleartype.aspx
+
+### Patent Claims, Prior Art, and Validity
+
+Steve Gibson claims that the [technique used by ClearType is a reinvention of a
+20-years old thing used on the Apple II][gibson]. His exact words are
+
+> Thus, Microsoft's 'ClearType' application of sub-pixel text rendering does
+> not represent the dramatic breakthrough that they claim and it can not be
+> the valid subject for intellectual property acquisition.
+
+Unfortunately, we believe that Mr. Gibson doesn't understand patent law well.
+Under the current US regime, any minor improvement to a previous technique can
+be considered an 'invention' and 'protected' by a patent under the right
+circumstances (e.g., if it is not totally trivial). If we look at the [first
+ClearType related patent mentioned above][us6219025], we see that the [Apple II Wozniak
+patent][us4136359] covering this machine's display technique is listed first in the
+patents' citations. This shows that both Microsoft and the patent examiner who
+granted the patents were aware of this 'prior art'.
+
+We are not trying to defend Microsoft here, just wanting to avoid feeding false
+hopes to people who would like to see the patent revoked.
+
+Another popular view is that [these patents are too general to be enforceable][opinion].
+Well, to be fair, some of the claims in these patents do indeed use rather
+vague descriptive terms (even for a patent lawyer or an 'expert in the field').
+This is absolutely not surprising, it is a direct consequence of how the patent
+game works.
+
+We won't cover this in greater detail since there are [many interesting pages][interestingpages] on
+the subject. However, in case you invalidate a single patent claim (e.g., with
+prior art), that doesn't mean the whole patent is busted. Any other independent
+and dependent claim can still be enforced.
+
+Some of these patents have up to 40 claims. Invalidating them is going to need
+serious prior-art, even if there are also strong chances to invalidate the most
+general claims in there. For example, many of the cheap LCD screens on digital
+cameras have used a screen where each pixel is either red, green, or blue, with
+colour images directly mapped to them; they have been doing it for years, even
+when displaying text or menus, and this corresponds exactly to what the most
+general claims cover. If we can find a proof that the technique was deployed
+before the patent's filing date, we could have valid prior art to bust these.
+
+[gibson]: http://www.grc.com/ctwho.htm
+[us6219025]: http://www.google.com/patents/US6219025
+[us4136359]: http://www.google.com/patents/US4136359
+[opinion]: http://answers.google.com/answers/threadview?id=723683
+[interestingpages]: http://www.tms.org/pubs/journals/JOM/matters/matters-9007.html
+
+### Possible Work-Arounds
+
+People have proposed alternatives to the ClearType color filtering method. A
+very good example is the [SubLCD][sublcd] technique, which employs a different way to use
+sub-pixels compared to Microsoft's ClearType implementation. Its author even
+says it doesn't infringe the ClearType patents.
+
+Unfortunately, the FreeType team doesn't share this enthusiasm. The reason is
+precisely the very vague patent claims described previously. There is a
+non-negligible (even if small) chance that these claims also cover the SubLCD
+technique. The situation would probably be different if we could invalidate the
+broader patent claims, but this is not the case currently.
+
+[sublcd]: http://www.oyhus.no/SubLCD.html
+
+### Does FreeType Implement Any of the Patented Techniques?
+
+Technically, no. The patents cover the whole process of generating and
+displaying sub-pixel images. Since the font engine doesn't do the display part,
+it cannot infringe. Apart from that, FreeType has provided the capability of
+converting vector shapes into un-filtered sub-pixel images for a long time.
+
+By default, FreeType's scan-line converter returns 'gray' sub-pixel images,
+where for each pixel the color components are equal (this is, R=G=B). The
+result is visually identical to gray anti-aliasing and cannot infringe any of
+the ClearType patents.
+
+Similarly, the LCD-specific filtering API is disabled by default, which means
+that it returns an error and doesn't alter sub-pixel images.
+
+You can override these limitations by activating option
+`FT_CONFIG_OPTION_SUBPIXEL_RENDERING` in FreeType's `ftoption.h` configuration
+file, but you should do that at your own risk.

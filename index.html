@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<div class="home">
+<!--
+<p>FreeType is a freely available software library to render fonts.</p>
+
+<p>It is written in C, designed to be small, efficient, highly customizable, and portable while capable of producing high-quality output (glyph images) of most vector and bitmap font formats.</p>
+
+<p>Some products that use FreeType for rendering fonts on screen or on paper, either exclusively or partially:</p>
+
+<ul>
+<li>GNU/Linux and other free Unix operating system derivates like FreeBSD or NetBSD;</li>
+<li>iOS, Apple's mobile operating system for iPhones and iPads;</li>
+<li>Android, Google's operating system for smartphones and tablet computers;</li>
+<li>ChromeOS, Google's operating system for laptop computers;</li>
+<li>ReactOS, a free open source operating system based on the best design principles found in the Windows NT architecture;</li>
+<li>Ghostscript, a PostScript interpreter used in many printers.</li>
+</ul>
+
+<p>Counting the above products only, you get more than a billion devices that contain FreeType.</p>
+-->
+  <h1>News and Updates</h1>
+
+  <ul class="posts">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+	{{ post.excerpt }}
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+
+</div>
